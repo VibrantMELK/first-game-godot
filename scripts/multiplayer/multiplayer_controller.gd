@@ -7,12 +7,19 @@ const JUMP_VELOCITY = -300.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var direction = 1
+var do_jump = false
+var _is_on_floor = true
 
 @export var player_id := 1:
 	set(id):
 		player_id = id
-		
+		$InputSynchronizer.set_multiplayer_authority(id)
 
+func _ready():
+	if multiplayer.get_unique_id() == player_id:
+		$Camera2D.make_current()
+	else:
+		$Camera2D.enalbed = false
 
 func _apply_animations(delta):
 	# Flip the sprite
@@ -36,11 +43,12 @@ func _apply_movement_from_input(delta):
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if do_jump and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		do_jump = false
 
 	# Get the input direction: -1, 0, 1
-	var direction := $InputSynchronizer.input_direction
+	var direction = $InputSynchronizer.input_direction
 	
 	# Apply movement
 	if direction:
@@ -51,5 +59,6 @@ func _apply_movement_from_input(delta):
 	move_and_slide()
 
 
-func _physics_process(delta: float) -> void:
-	pass
+func _physics_process(delta):
+	if multiplayer.is_server():
+		_apply_movement_from_input(delta)
