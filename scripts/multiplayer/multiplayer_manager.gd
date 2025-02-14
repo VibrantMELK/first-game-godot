@@ -21,6 +21,8 @@ func become_host():
 	multiplayer.peer_disconnected.connect(_del_player)
 	
 	_remove_single_player()
+	
+	_add_player_to_game(1)
 
 func join_as_player_2():
 	print("Player 2 joining")
@@ -33,7 +35,10 @@ func join_as_player_2():
 	_remove_single_player()
 
 func _add_player_to_game(id: int):
-	print("Player % joined the game!" % id)
+	print("Player %s joined the game!" % id)
+	if not _player_spawn_node.has_node(str(id)):
+		return
+		_player_spawn_node.get_node(str(id)).queue_free()
 	
 	var player_to_add = multiplayer_scene.instantiate()
 	player_to_add.player_id = id
