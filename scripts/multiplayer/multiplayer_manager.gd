@@ -7,10 +7,14 @@ var multiplayer_scene = preload("res://scenes/multiplayer_player.tscn")
 
 var _player_spawn_node
 
+var host_mode_enabled = false
+
 func become_host():
 	print("Starting host!")
 	
 	_player_spawn_node = get_tree().get_current_scene().get_node("Players")
+	
+	host_mode_enabled = true
 	
 	var server_peer = ENetMultiplayerPeer.new()
 	server_peer.create_server(SERVER_PORT)

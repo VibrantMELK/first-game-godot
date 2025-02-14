@@ -19,7 +19,7 @@ func _ready():
 	if multiplayer.get_unique_id() == player_id:
 		$Camera2D.make_current()
 	else:
-		$Camera2D.enalbed = false
+		$Camera2D.enabled = false
 
 func _apply_animations(delta):
 	# Flip the sprite
@@ -29,7 +29,7 @@ func _apply_animations(delta):
 		animated_sprite.flip_h = true
 		
 	# Play animations
-	if is_on_floor():
+	if _is_on_floor:
 		if direction == 0:
 			animated_sprite.play("idle")
 		else:
@@ -61,4 +61,8 @@ func _apply_movement_from_input(delta):
 
 func _physics_process(delta):
 	if multiplayer.is_server():
+		_is_on_floor = is_on_floor()
 		_apply_movement_from_input(delta)
+		
+	if not multiplayer.is_server() || MultiplayerManager.host_mode_enabled:
+		_apply_animations(delta)
