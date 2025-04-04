@@ -3,7 +3,7 @@
 Dette prosjektet var et 2D singleplayer gjort multiplayer spill laget i Godot programvaren og jeg brukte programmeringsspråket som er bygd inn i Godot. 
 De mest viktigste funskjonene i spillet var først funksjonen til å samle kronenene som er legget rundt omkring på kartet, den andre er funksjonen til å hoppe go bevege seg til høyre og venstre, og til sist men ikke minst er det funksjonen som gjør spiller om til et mutliplayer spill.
 
-For å spille spillet kan man gå gjennom selve filen på PC-en min.
+For å spille spillet kan man gå gjennom selve filen på PC-en min eller åpne Godot programvaren på PC-en min og åpne "First Game" filen og trykke på en liten trekant på toppen til høyre på skjermen.
 
 Kilde liste:
 Flere kilder som jeg brukte er i Words dokument loggen min. <br>
